@@ -1,9 +1,7 @@
 package com.revature.challenge;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -54,7 +52,11 @@ public class StreamTest {
 
         
         // Code your Solution here
-
+        Optional <Student> bobMaybe = students.stream()
+        		.filter(s -> s.getName().equals("Bob"))
+        		.findFirst();
+        
+        System.out.println(bobMaybe.isPresent() ? bobMaybe.get().getName() : "No student found");
         
         
         
@@ -67,7 +69,10 @@ public class StreamTest {
 
         
         // Code your Solution here
-
+        Optional<Student> possibleStreet = students.stream()
+        		.filter(s -> s.getAddress().getZipcode().equals("1235"))
+        		.findFirst();
+        System.out.println(possibleStreet.isPresent() ? possibleStreet.get().getName() : "No student found");
         
         
         
@@ -80,7 +85,11 @@ public class StreamTest {
         
         // Code your Solution here
 
-        
+        List<Student> numbers = students.stream()
+        		.filter(s -> s.getMobileNumbers() // returns a list
+        				.stream().anyMatch(n -> n.getNumber().equals("3333")))
+        		.collect(Collectors.toList());
+        numbers.forEach(s -> System.out.println(s.getName()));
         
         
         
@@ -88,10 +97,15 @@ public class StreamTest {
          (4) Get all student having mobile number "1233" and "1234" and print their
              names to the console.
          ***************************************************************************/
-
+        
+        System.out.println("=============================== FOUR ===================");
         
         // Code your Solution here
-        
+        numbers = students.stream()
+        		.filter(s -> s.getMobileNumbers()
+        				.stream().anyMatch(n-> n.getNumber().equals("1233") || n.getNumber().equals("1234")))
+        		.collect(Collectors.toList());
+        numbers.forEach(s -> System.out.println(s.getName()));
         
         
         
@@ -101,6 +115,9 @@ public class StreamTest {
 	         Hint: Use Collectors.toList(). Print it to the console. 
 	         Resource: https://www.geeksforgeeks.org/collectors-tolist-method-in-java-with-examples/
         ****************************************************************************/
+        
+        System.out.println("=============================== FIVE ===================");
+
         TempStudent tmpStud1 = new TempStudent(
             "Bob1",
             201,
@@ -116,6 +133,11 @@ public class StreamTest {
         List<TempStudent> tmpStudents = Arrays.asList(tmpStud1, tmpStud2);
         
         // Code your Solution here, don't touch the code above
+        List<Student> studentList = tmpStudents.stream()
+        		.map(s -> new Student(s.name, s.age, s.address, s.mobileNumbers))
+        		.collect(Collectors.toList());
+        
+        studentList.forEach(s -> System.out.println(s));
  
 
         
@@ -130,7 +152,10 @@ public class StreamTest {
 
         
         // Code your Solution here
-
+        List<String> studentNames = studentList.stream()
+        		.map(string -> new String(string.getName()))
+        		.collect(Collectors.toList());
+        studentNames.forEach(n -> System.out.println(n));
         
         
         
@@ -142,7 +167,7 @@ public class StreamTest {
 
         
         // Code your Solution here
-
+        
         
         
         
@@ -155,7 +180,10 @@ public class StreamTest {
             Arrays.asList("Bob", "Danny", "Alice", "Eddie", "Cathy");
  
         // Code your Solution here, don't touch the code above
-
+        List<String> upperList = nameList.stream()
+        		.map(name -> name.toUpperCase())
+        		.collect(Collectors.toList());
+        upperList.forEach(name -> System.out.println(name));
         
         
         
@@ -164,12 +192,16 @@ public class StreamTest {
          (9) Sort List<String> namesList by natural order.
              Hint: Research .sorted() method https://www.geeksforgeeks.org/stream-sorted-in-java/#:~:text=Stream%20sorted()%20returns%20a,streams%2C%20no%20stability%20is%20guaranteed.
          *****************************************************************************/
+        System.out.println("=================== NINE =================");
         List<String> namesList =
             Arrays.asList("Bob", "Danny", "Alice", "Eddie", "Cathy");
  
         // Code your Solution here, don't touch the code above
 
-
+        List<String> orderedList = namesList.stream()
+        		.sorted()
+        		.collect(Collectors.toList());
+        orderedList.forEach(name -> System.out.println(name));
         
         
  
